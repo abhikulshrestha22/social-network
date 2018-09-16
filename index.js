@@ -5,8 +5,6 @@ const generatePassword = require('password-generator');
 const app = express();
 
 
-//serve static file from the react app 
-app.use(express.static(path.join(__dirname,'client/build')));
 
 //all api endpoints under /api
 app.get('/api/passwords',(req,res)=>{
@@ -21,11 +19,17 @@ app.get('/api/passwords',(req,res)=>{
 
 });
 
+if(process.env.NODE_ENV ==="production"){
+
+//serve static file from the react app 
+app.use(express.static(path.join(__dirname,'client/build')));
 // The catchall handler : for any request that doesnt match one above
 //send back React's index.html file.
 app.get('*',(req,res)=>{
     res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
+
+}
 
 const port = process.env.PORT || 5000;
 app.listen(port,()=>{
