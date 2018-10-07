@@ -1,23 +1,38 @@
 const express = require('express');
 const path = require('path');
 const generatePassword = require('password-generator');
-
+const bodyParser = require('body-parser');
 const app = express();
+const mongoose = require('mongoose');
+
+
+mongoose.connect(require('./config').db).then(()=>{
+    console.log("DB Connected");
+})
+.catch((err)=>console.log(err));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
+
+
+app.use(function(req,res,next){
+    //check if the database is connected. If not return error
+    // if(mongoose.connection.readyState!=1){
+    //     console.log(mongoose.connection.readyState);
+    //     console.error("db not connected");
+    //         return res.status(500).send({
+    //         success:false,
+    //         message:'Error : Server Error'                
+    //     });
+    // }
+    next();
+})
 
 
 
-//all api endpoints under /api
-app.get('/api/passwords',(req,res)=>{
-    const count = 5;
+require('./routes')(app);
 
-    //generate some passwords
-    const passwords = Array.from(Array(count).keys()).map(i=>generatePassword(12,false))
 
-    //return as json
-    res.json(passwords);
-    console.log(`sent ${count} passwords`);
-
-});
 
 if(process.env.NODE_ENV ==="production"){
 

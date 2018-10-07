@@ -1,0 +1,49 @@
+$font-stack:    Helvetica, sans-serif;
+$primary-color: white;
+$font-size:10px;
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+  font-size: $font-size;
+}
+
+.authHeader{
+  background-color: #0c5460;
+  color: $primary-color;
+
+  div{
+    h4{
+      @media screen and (min-width:768px){
+        position: absolute;
+        top:50%;
+        transform:translateY(-50%)
+
+      }
+    }
+  }
+}
+
+.form-login{
+  padding: 10px;
+
+  table{
+    tr{
+      td{
+        font-size: .8rem;
+      }
+    }
+  }
+}
+
+.login-button{
+  font-size: .8rem;
+  padding: .1rem;
+  padding-left:.3rem;
+  padding-right: .3rem;
+}
+
+.login-div{
+  display: flex;
+  justify-content: center;
+}
